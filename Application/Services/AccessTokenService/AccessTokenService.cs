@@ -3,11 +3,19 @@ using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Application.Services.DateTimeProvider;
 
 namespace Application.Services.AccessTokenService
 {
     public class AccessTokenService : IAccessTokenService
     {
+        private readonly IDateTimeProvider _dateTimeProvider;
+
+        public AccessTokenService(IDateTimeProvider dateTimeProvider)
+        {
+            _dateTimeProvider = dateTimeProvider;
+        }
+
         public string CreateToken(User user, IList<Role> roles, IConfiguration configuration)
         {
             List<Claim> claims = new List<Claim>
@@ -29,7 +37,7 @@ namespace Application.Services.AccessTokenService
 
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(7),
+                expires: _dateTimeProvider.UtcNow.AddMinutes(7),
                 signingCredentials: creds
                 );
 
