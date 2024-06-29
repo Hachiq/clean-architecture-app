@@ -11,7 +11,7 @@ namespace Application.Services.RefreshTokenService
         {
             _dateTimeProvider = dateTimeProvider;
         }
-        public RefreshToken CreateToken() // GO FOR TESTING YOU SON OF A GUN
+        public RefreshToken CreateToken()
         {
             var refreshToken = new RefreshToken()
             {
