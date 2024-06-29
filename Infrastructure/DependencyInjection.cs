@@ -1,5 +1,7 @@
 ﻿using Application.Repositories;
+using Application.Services.AccessTokenGenerator;
 using Application.Services.DateTimeProvider;
+using Infrastructure.AccessTokens;
 using Infrastructure.Data;
 using Infrastructure.Services.DateTimeProvider;
 using Infrastructure.Users;
@@ -21,6 +23,8 @@ namespace Infrastructure
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+            services.AddScoped<IAccessTokenGenerator, AccessTokenGenerator>();
 
             return services;
         }
