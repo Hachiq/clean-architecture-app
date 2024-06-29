@@ -1,5 +1,7 @@
 ﻿using Application.Repositories;
+using Application.Services.DateTimeProvider;
 using Infrastructure.Data;
+using Infrastructure.Services.DateTimeProvider;
 using Infrastructure.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +19,8 @@ namespace Infrastructure
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
             services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
             return services;
         }
