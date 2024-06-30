@@ -2,6 +2,8 @@
 using Application.Repositories;
 using Infrastructure.Data;
 using Infrastructure.EmailService;
+using Infrastructure.RefreshTokens;
+using Infrastructure.Roles;
 using Infrastructure.Security.TokenGenerator;
 using Infrastructure.Security.TokenValidator;
 using Infrastructure.Services;
@@ -50,6 +52,8 @@ namespace Infrastructure
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRolesRepository, RolesRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
             return services;
         }
