@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
 
 namespace Infrastructure
 {
@@ -16,20 +17,39 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("DefaultConnection") 
+            services
+                .AddServices()
+                .AddRepositories()
+                .AddAuthentication(configuration)
+                .AddPersistence(configuration);
+
+            return services;
+        }
+
+        private static IServiceCollection AddServices(this IServiceCollection services)
+        {
+            services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+            services.AddSingleton<IPasswordService, PasswordService>();
+
+            services.AddSingleton<IRefreshTokenService, RefreshTokenService>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
+        {
+            var connectionString = configuration.GetConnectionString("DefaultConnection")
                 ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
-
-            services.AddScoped<IUserRepository, UserRepository>();
-
-            services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-
-            services.AddScoped<IPasswordService, PasswordService>();
-
-            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
-
-            services.AddAuthentication(configuration);
 
             return services;
         }
