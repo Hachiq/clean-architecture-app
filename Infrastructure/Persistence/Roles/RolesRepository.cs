@@ -3,7 +3,7 @@ using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Roles
+namespace Infrastructure.Persistence.Roles
 {
     public class RolesRepository : IRolesRepository
     {

@@ -3,7 +3,7 @@ using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Users
+namespace Infrastructure.Persistence.Users
 {
     public class UserRepository : IUserRepository
     {

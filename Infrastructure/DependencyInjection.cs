@@ -2,12 +2,12 @@
 using Application.Repositories;
 using Infrastructure.Data;
 using Infrastructure.EmailService;
-using Infrastructure.RefreshTokens;
-using Infrastructure.Roles;
+using Infrastructure.Persistence.RefreshTokens;
+using Infrastructure.Persistence.Roles;
+using Infrastructure.Persistence.Users;
 using Infrastructure.Security.TokenGenerator;
 using Infrastructure.Security.TokenValidator;
 using Infrastructure.Services;
-using Infrastructure.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

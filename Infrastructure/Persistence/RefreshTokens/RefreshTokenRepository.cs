@@ -4,7 +4,7 @@ using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.RefreshTokens
+namespace Infrastructure.Persistence.RefreshTokens
 {
     public class RefreshTokenRepository : IRefreshTokenRepository
     {
