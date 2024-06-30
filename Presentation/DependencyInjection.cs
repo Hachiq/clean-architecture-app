@@ -6,6 +6,8 @@ namespace Presentation
     {
         public static IServiceCollection AddPresentationServices(this IServiceCollection services)
         {
+            services.AddControllers();
+
             return services;
         }
     }
