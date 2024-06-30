@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Repositories;
 using Infrastructure.Data;
+using Infrastructure.EmailService;
 using Infrastructure.Security.TokenGenerator;
 using Infrastructure.Security.TokenValidator;
 using Infrastructure.Services;
@@ -9,7 +10,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Runtime.CompilerServices;
 
 namespace Infrastructure
 {
@@ -20,8 +20,18 @@ namespace Infrastructure
             services
                 .AddServices()
                 .AddRepositories()
+                .AddEmailSender(configuration)
                 .AddAuthentication(configuration)
                 .AddPersistence(configuration);
+
+            return services;
+        }
+
+        private static IServiceCollection AddEmailSender(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<EmailSettings>(configuration.GetSection(EmailSettings.Section));
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
             return services;
         }
