@@ -18,7 +18,7 @@ namespace Infrastructure.Security.TokenGenerator
             _jwtSettings = jwtOptions.Value;
         }
 
-        public string CreateToken(User user, IList<Role> roles)
+        public string CreateToken(User user, IList<Role>? roles)
         {
             var claims = new List<Claim>
             {
@@ -27,11 +27,7 @@ namespace Infrastructure.Security.TokenGenerator
                 new(JwtRegisteredClaimNames.Email, user.Email.ToString())
             };
 
-            foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role.Name));
-            }
-
+            roles?.ToList().ForEach(role => claims.Add(new(ClaimTypes.Role, role.Name)));
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_jwtSettings.Secret));
 
