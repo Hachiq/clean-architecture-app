@@ -1,4 +1,5 @@
-﻿using Application.Services.PasswordService;
+﻿using Application.Interfaces;
+using Infrastructure.Services;
 
 namespace UnitTests.Services
 {

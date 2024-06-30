@@ -1,8 +1,8 @@
-﻿using Application.Services.DateTimeProvider;
+﻿using Application.Interfaces;
 using Domain.Entities;
 using System.Security.Cryptography;
 
-namespace Application.Services.RefreshTokenService
+namespace Infrastructure.Services
 {
     public class RefreshTokenService : IRefreshTokenService
     {

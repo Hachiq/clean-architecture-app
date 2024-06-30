@@ -1,9 +1,8 @@
-﻿using Application.Repositories;
-using Application.Services.AccessTokenGenerator;
-using Application.Services.DateTimeProvider;
+﻿using Application.Interfaces;
+using Application.Repositories;
 using Infrastructure.AccessTokens;
 using Infrastructure.Data;
-using Infrastructure.Services.DateTimeProvider;
+using Infrastructure.Services;
 using Infrastructure.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +24,10 @@ namespace Infrastructure
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
             services.AddScoped<IAccessTokenGenerator, AccessTokenGenerator>();
+
+            services.AddScoped<IPasswordService, PasswordService>();
+
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 
             return services;
         }

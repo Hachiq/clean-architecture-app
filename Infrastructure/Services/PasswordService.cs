@@ -1,7 +1,8 @@
-﻿using System.Security.Cryptography;
+﻿using Application.Interfaces;
+using System.Security.Cryptography;
 using System.Text;
 
-namespace Application.Services.PasswordService
+namespace Infrastructure.Services
 {
     public class PasswordService : IPasswordService
     {

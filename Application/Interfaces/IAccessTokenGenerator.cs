@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace Application.Services.AccessTokenGenerator
+namespace Application.Interfaces
 {
     public interface IAccessTokenGenerator
     {

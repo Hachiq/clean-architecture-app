@@ -2,9 +2,8 @@
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using Application.Services.DateTimeProvider;
 using Microsoft.Extensions.Options;
-using Application.Services.AccessTokenGenerator;
+using Application.Interfaces;
 
 namespace Infrastructure.AccessTokens
 {

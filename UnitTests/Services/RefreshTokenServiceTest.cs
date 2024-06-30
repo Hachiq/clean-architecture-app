@@ -1,5 +1,5 @@
-﻿using Application.Services.DateTimeProvider;
-using Application.Services.RefreshTokenService;
+﻿using Application.Interfaces;
+using Infrastructure.Services;
 using Moq;
 
 namespace UnitTests.Services

@@ -1,4 +1,4 @@
-﻿using Application.Services.DateTimeProvider;
+﻿using Application.Interfaces;
 using Domain.Entities;
 using Infrastructure.AccessTokens;
 using Microsoft.Extensions.Options;

@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace Application.Services.RefreshTokenService
+namespace Application.Interfaces
 {
     public interface IRefreshTokenService
     {
