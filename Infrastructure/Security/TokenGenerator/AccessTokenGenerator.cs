@@ -5,7 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Options;
 using Application.Interfaces;
 
-namespace Infrastructure.AccessTokens
+namespace Infrastructure.Security.TokenGenerator
 {
     public class AccessTokenGenerator : IAccessTokenGenerator
     {

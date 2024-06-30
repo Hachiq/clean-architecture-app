@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.AccessTokens
+﻿namespace Infrastructure.Security.TokenGenerator
 {
     public class JwtSettings
     {
