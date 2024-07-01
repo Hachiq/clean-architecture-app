@@ -3,9 +3,8 @@ using Application.Repositories;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Contributors.Authorization;
 
-namespace Presentation.Controllers
+namespace Presentation.Authorization
 {
     [Route("auth")]
     [ApiController]
