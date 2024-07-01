@@ -25,7 +25,17 @@ namespace Infrastructure.Persistence.RefreshTokens
         public async Task ExpireRefreshToken(RefreshToken refreshToken)
         {
             refreshToken.ExpiresAt = _dateTimeProvider.UtcNow;
-            _db.Update(refreshToken);
+            _db.RefreshTokens.Update(refreshToken);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task UpdateRefreshToken(RefreshToken oldRefreshToken, RefreshToken newRefreshToken)
+        {
+            oldRefreshToken.Token = newRefreshToken.Token;
+            oldRefreshToken.CreatedAt = newRefreshToken.CreatedAt;
+            oldRefreshToken.ExpiresAt = newRefreshToken.ExpiresAt;
+
+            _db.RefreshTokens.Update(oldRefreshToken);
             await _db.SaveChangesAsync();
         }
     }

@@ -6,5 +6,6 @@ namespace Application.Repositories
     {
         Task<RefreshToken?> GetByTokenAsync(string? token);
         Task ExpireRefreshToken(RefreshToken refreshToken);
+        Task UpdateRefreshToken(RefreshToken oldRefreshToken, RefreshToken newRefreshToken);
     }
 }

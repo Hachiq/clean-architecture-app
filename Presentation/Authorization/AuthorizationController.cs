@@ -51,6 +51,10 @@ namespace Presentation.Authorization
                 PasswordSalt = passwordSalt
             };
 
+            var newRefreshToken = _refreshTokenService.CreateToken();
+
+            user.RefreshToken = newRefreshToken;
+
             await _userRepository.AddAsync(user);
 
             return Ok();
@@ -60,7 +64,7 @@ namespace Presentation.Authorization
         public async Task<ActionResult> Login(LoginRequest request)
         {
             var user = await _userRepository.GetByUsernameAsync(request.Username);
-            if (user is null || _passwordService.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+            if (user is null || !_passwordService.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
                 return BadRequest("User not found or wrong password"); // Use filters instead of this 'if' check
             }
@@ -70,7 +74,7 @@ namespace Presentation.Authorization
             var newRefreshToken = _refreshTokenService.CreateToken();
 
             SetCookiesRefreshToken(newRefreshToken);
-            await _userRepository.UpdateUserRefreshToken(user, newRefreshToken);
+            await _refreshTokenRepository.UpdateRefreshToken(user.RefreshToken, newRefreshToken);
 
             var jwt = _accessTokenGenerator.CreateToken(user, roles);
 

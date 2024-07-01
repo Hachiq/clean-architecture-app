@@ -16,6 +16,7 @@ namespace Infrastructure.Persistence.Users
         public async Task AddAsync(User user)
         {
             await _db.Users.AddAsync(user);
+            await _db.SaveChangesAsync();
         }
 
         public async Task<User?> GetByIdAsync(Guid id)
@@ -28,14 +29,6 @@ namespace Infrastructure.Persistence.Users
             return await _db.Users
                 .Include(u => u.RefreshToken)
                 .SingleOrDefaultAsync(u => u.Username == username);
-        }
-
-        public async Task UpdateUserRefreshToken(User user, RefreshToken refreshToken)
-        {
-            user.RefreshToken = refreshToken;
-
-            _db.Users.Update(user);
-            await _db.SaveChangesAsync();
         }
     }
 }
