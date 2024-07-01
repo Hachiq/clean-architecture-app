@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.Interfaces.Authentication;
 using Application.Repositories;
 using Infrastructure.Data;
 using Infrastructure.EmailService;
@@ -73,6 +74,8 @@ namespace Infrastructure
             services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.Section));
 
             services.AddSingleton<IAccessTokenGenerator, AccessTokenGenerator>();
+
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             services.ConfigureOptions<JwtBearerTokenValidationConfiguration>()
                 .AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)

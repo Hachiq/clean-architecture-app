@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.Interfaces.Authentication;
 using Application.Repositories;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
@@ -13,83 +14,50 @@ namespace Presentation.Authorization
         private readonly IUserRepository _userRepository;
         private readonly IRolesRepository _rolesRepository;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
-        private readonly IPasswordService _passwordService;
         private readonly IAccessTokenGenerator _accessTokenGenerator;
-        private readonly IRefreshTokenService _refreshTokenService;
         private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly IAuthenticationService _authenticationService;
 
         public AuthorizationController(
             IUserRepository userRepository,
             IRolesRepository rolesRepository,
             IRefreshTokenRepository refreshTokenRepository,
-            IPasswordService passwordService,
             IAccessTokenGenerator accessTokenGenerator,
-            IRefreshTokenService refreshTokenService,
-            IDateTimeProvider dateTimeProvider)
+            IDateTimeProvider dateTimeProvider,
+            IAuthenticationService authenticationService)
         {
             _userRepository = userRepository;
             _rolesRepository = rolesRepository;
             _refreshTokenRepository = refreshTokenRepository;
-            _passwordService = passwordService;
             _accessTokenGenerator = accessTokenGenerator;
-            _refreshTokenService = refreshTokenService;
             _dateTimeProvider = dateTimeProvider;
+            _authenticationService = authenticationService;
         }
 
-        [HttpPost("register")]
+        [HttpPost("register")] // Use filters
         public async Task<ActionResult> Register(RegisterRequest request)
         {
-            _passwordService.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-
-            var user = new User
-            {
-                Id = Guid.NewGuid(),
-                Username = request.Username,
-                Email = request.Email,
-                EmailConfirmed = false,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt
-            };
-
-            var newRefreshToken = _refreshTokenService.CreateToken();
-
-            user.RefreshToken = newRefreshToken;
-
-            await _userRepository.AddAsync(user);
+            await _authenticationService.RegisterUserAsync(request);
 
             return Ok();
         }
 
-        [HttpPost("login")]
+        [HttpPost("login")] // Use filters
         public async Task<ActionResult> Login(LoginRequest request)
         {
-            var user = await _userRepository.GetByUsernameAsync(request.Username);
-            if (user is null || !_passwordService.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
-            {
-                return BadRequest("User not found or wrong password"); // Use filters instead of this 'if' check
-            }
+            var result = await _authenticationService.LoginUserAsync(request);
 
-            var roles = await _rolesRepository.GetByUserIdAsync(user.Id);
+            SetCookiesRefreshToken(result.RefreshToken);
 
-            var newRefreshToken = _refreshTokenService.CreateToken();
-
-            SetCookiesRefreshToken(newRefreshToken);
-            await _refreshTokenRepository.UpdateRefreshToken(user.RefreshToken, newRefreshToken);
-
-            var jwt = _accessTokenGenerator.CreateToken(user, roles);
-
-            return Ok(jwt);
+            return Ok(result.JWT);
         }
 
         [HttpPost("logout")] // Use filters for checking if token is not null
         public async Task<ActionResult> Logout()
         {
-            var refreshToken = await _refreshTokenRepository.GetByTokenAsync(Request.Cookies["refreshToken"]);
+            await _authenticationService.LogoutAsync(Request.Cookies["refreshToken"]);
 
-            await _refreshTokenRepository.ExpireRefreshToken(refreshToken);
-
-            refreshToken.ExpiresAt = _dateTimeProvider.UtcNow;
-            SetCookiesRefreshToken(refreshToken);
+            Response.Cookies.Delete("refreshToken");
 
             return Ok();
         }
