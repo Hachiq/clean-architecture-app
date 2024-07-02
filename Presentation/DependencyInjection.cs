@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Presentation.Authorization.Filters;
 
 namespace Presentation
 {
@@ -7,6 +8,16 @@ namespace Presentation
         public static IServiceCollection AddPresentationServices(this IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddAuthorizationFilters();
+
+            return services;
+        }
+
+        private static IServiceCollection AddAuthorizationFilters(this IServiceCollection services)
+        {
+            services.AddTransient<UsernameTakenFilter>();
+            services.AddTransient<EmailTakenFilter>();
 
             return services;
         }

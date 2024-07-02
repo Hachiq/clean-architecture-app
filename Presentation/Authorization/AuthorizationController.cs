@@ -4,6 +4,7 @@ using Application.Repositories;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Authorization.Filters;
 
 namespace Presentation.Authorization
 {
@@ -18,7 +19,9 @@ namespace Presentation.Authorization
             _authenticationService = authenticationService;
         }
 
-        [HttpPost("register")] // Use filters
+        [HttpPost("register")]
+        [ServiceFilter(typeof(UsernameTakenFilter))]
+        [ServiceFilter(typeof(EmailTakenFilter))]
         public async Task<ActionResult> Register(RegisterRequest request)
         {
             await _authenticationService.RegisterUserAsync(request);
