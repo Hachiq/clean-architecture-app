@@ -1,8 +1,5 @@
-﻿using Application.Interfaces;
-using Application.Interfaces.Authentication;
-using Application.Repositories;
+﻿using Application.Interfaces.Authentication;
 using Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Authorization.Filters;
 
