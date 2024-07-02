@@ -20,8 +20,8 @@ namespace Presentation.Authorization
         }
 
         [HttpPost("register")]
-        [ServiceFilter(typeof(UsernameInvalid))]
-        [ServiceFilter(typeof(PasswordTooShort))]
+        [ServiceFilter(typeof(UsernameInvalidFilter))]
+        [ServiceFilter(typeof(PasswordTooShortFilter))]
         [ServiceFilter(typeof(UsernameTakenFilter))]
         [ServiceFilter(typeof(EmailTakenFilter))]
         public async Task<ActionResult> Register(RegisterRequest request)
@@ -32,8 +32,8 @@ namespace Presentation.Authorization
         }
 
         [HttpPost("login")]
-        [ServiceFilter(typeof(UsernameInvalid))]
-        [ServiceFilter(typeof(PasswordTooShort))]
+        [ServiceFilter(typeof(UsernameInvalidFilter))]
+        [ServiceFilter(typeof(PasswordTooShortFilter))]
         [ServiceFilter(typeof(UserNotFoundOrWrongPasswordFilter))]
         public async Task<ActionResult> Login(LoginRequest request)
         {
@@ -44,7 +44,8 @@ namespace Presentation.Authorization
             return Ok(result.JWT);
         }
 
-        [HttpPost("logout")] // Use filters for checking if token is not null
+        [HttpPost("logout")]
+        [ServiceFilter(typeof(RefreshTokenInvalidFilter))]
         public async Task<ActionResult> Logout()
         {
             await _authenticationService.LogoutAsync(Request.Cookies["refreshToken"]);
@@ -54,7 +55,8 @@ namespace Presentation.Authorization
             return Ok();
         }
 
-        [HttpGet("refresh-token")] // Use filters to check if token is expired
+        [HttpGet("refresh-token")]
+        [ServiceFilter(typeof(RefreshTokenInvalidFilter))]
         public async Task<ActionResult> RefreshToken()
         {
             var jwt = await _authenticationService.RefreshTokenAsync(Request.Cookies["refreshToken"]);
