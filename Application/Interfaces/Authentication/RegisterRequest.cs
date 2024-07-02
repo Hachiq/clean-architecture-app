@@ -1,4 +1,4 @@
 ﻿namespace Application.Interfaces.Authentication
 {
-    public record RegisterRequest(string Username, string Email, string Password);
+    public record RegisterRequest(string Username, string Email, string Password) : IUsernameRequest, IPasswordRequest;
 }

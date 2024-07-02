@@ -31,7 +31,10 @@ namespace Presentation.Authorization
             return Ok();
         }
 
-        [HttpPost("login")] // Use filters
+        [HttpPost("login")]
+        [ServiceFilter(typeof(UsernameInvalid))]
+        [ServiceFilter(typeof(PasswordTooShort))]
+        [ServiceFilter(typeof(UserNotFoundOrWrongPasswordFilter))]
         public async Task<ActionResult> Login(LoginRequest request)
         {
             var result = await _authenticationService.LoginUserAsync(request);

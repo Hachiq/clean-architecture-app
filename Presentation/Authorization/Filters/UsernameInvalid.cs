@@ -8,7 +8,7 @@ namespace Presentation.Authorization.Filters
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            if (context.ActionArguments.TryGetValue("request", out var value) && value is RegisterRequest request)
+            if (context.ActionArguments.TryGetValue("request", out var value) && value is IUsernameRequest request)
             {
                 if (request.Username.Length < 4 || request.Username.Length > 50)
                 {

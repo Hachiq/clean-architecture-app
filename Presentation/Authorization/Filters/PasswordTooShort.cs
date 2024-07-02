@@ -8,7 +8,7 @@ namespace Presentation.Authorization.Filters
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            if (context.ActionArguments.TryGetValue("request", out var value) && value is RegisterRequest request)
+            if (context.ActionArguments.TryGetValue("request", out var value) && value is IPasswordRequest request)
             {
                 if (request.Password.Length < 4)
                 {

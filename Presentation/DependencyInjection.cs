@@ -21,6 +21,8 @@ namespace Presentation
             services.AddTransient<UsernameInvalid>();
             services.AddTransient<PasswordTooShort>();
 
+            services.AddTransient<UserNotFoundOrWrongPasswordFilter>();
+
             return services;
         }
     }
