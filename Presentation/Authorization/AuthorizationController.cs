@@ -11,26 +11,10 @@ namespace Presentation.Authorization
     [ApiController]
     public class AuthorizationController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IRolesRepository _rolesRepository;
-        private readonly IRefreshTokenRepository _refreshTokenRepository;
-        private readonly IAccessTokenGenerator _accessTokenGenerator;
-        private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IAuthenticationService _authenticationService;
 
-        public AuthorizationController(
-            IUserRepository userRepository,
-            IRolesRepository rolesRepository,
-            IRefreshTokenRepository refreshTokenRepository,
-            IAccessTokenGenerator accessTokenGenerator,
-            IDateTimeProvider dateTimeProvider,
-            IAuthenticationService authenticationService)
+        public AuthorizationController(IAuthenticationService authenticationService)
         {
-            _userRepository = userRepository;
-            _rolesRepository = rolesRepository;
-            _refreshTokenRepository = refreshTokenRepository;
-            _accessTokenGenerator = accessTokenGenerator;
-            _dateTimeProvider = dateTimeProvider;
             _authenticationService = authenticationService;
         }
 
@@ -62,26 +46,11 @@ namespace Presentation.Authorization
             return Ok();
         }
 
-        [HttpGet("refresh-token/{userId}")]
-        public async Task<ActionResult> RefreshToken(Guid userId)
+        [HttpGet("refresh-token")] // Use filters to check if token is expired
+        public async Task<ActionResult> RefreshToken()
         {
-            var refreshToken = await _refreshTokenRepository.GetByTokenAsync(Request.Cookies["refreshToken"]);
-
-            var user = await _userRepository.GetByIdAsync(userId);
-
-            if (user is null)
-            {
-                return Unauthorized("Invalid Refresh Token.");
-            }
-            else if (refreshToken?.ExpiresAt < _dateTimeProvider.UtcNow)
-            {
-                return Unauthorized("Token expired.");
-            }
-
-            var roles = await _rolesRepository.GetByUserIdAsync(userId);
-
-            string token = _accessTokenGenerator.CreateToken(user, roles);
-            return Ok(token);
+            var jwt = await _authenticationService.RefreshTokenAsync(Request.Cookies["refreshToken"]);
+            return Ok(jwt);
         }
 
         private void SetCookiesRefreshToken(RefreshToken newRefreshToken)

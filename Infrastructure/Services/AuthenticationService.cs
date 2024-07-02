@@ -1,7 +1,9 @@
 ﻿using Application.Interfaces;
 using Application.Interfaces.Authentication;
 using Application.Repositories;
+using Azure.Core;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Infrastructure.Services
 {
@@ -70,6 +72,16 @@ namespace Infrastructure.Services
         {
             var refreshToken = await _refreshTokenRepository.GetByTokenAsync(token);
             await _refreshTokenRepository.ExpireRefreshToken(refreshToken);
+        }
+
+        public async Task<string> RefreshTokenAsync(string? token)
+        {
+            var refreshToken = await _refreshTokenRepository.GetByTokenAsync(token);
+            var user = await _userRepository.GetByRefreshTokenIdAsync(refreshToken.Id);
+            var roles = await _rolesRepository.GetByUserIdAsync(user.Id);
+
+            string jwt = _accessTokenGenerator.CreateToken(user, roles);
+            return jwt;
         }
     }
 }

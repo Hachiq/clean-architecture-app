@@ -30,5 +30,10 @@ namespace Infrastructure.Persistence.Users
                 .Include(u => u.RefreshToken)
                 .SingleOrDefaultAsync(u => u.Username == username);
         }
+
+        public async Task<User?> GetByRefreshTokenIdAsync(Guid id)
+        {
+            return await _db.Users.SingleOrDefaultAsync(u => u.RefreshTokenId == id);
+        }
     }
 }

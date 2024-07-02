@@ -5,5 +5,6 @@
         Task RegisterUserAsync(RegisterRequest request);
         Task<LoginResponse> LoginUserAsync(LoginRequest request);
         Task LogoutAsync(string? refreshToken);
+        Task<string> RefreshTokenAsync(string? refreshToken);
     }
 }
