@@ -1,9 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Interfaces.Authentication;
 using Application.Repositories;
-using Azure.Core;
 using Domain.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Infrastructure.Services
 {
@@ -55,8 +53,6 @@ namespace Infrastructure.Services
         public async Task<LoginResponse> LoginUserAsync(LoginRequest request)
         {
             var user = await _userRepository.GetByUsernameAsync(request.Username);
-
-            // check user and password
 
             var roles = await _rolesRepository.GetByUserIdAsync(user.Id);
             var newRefreshToken = _refreshTokenService.CreateToken();

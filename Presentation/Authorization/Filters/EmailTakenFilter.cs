@@ -25,6 +25,8 @@ namespace Presentation.Authorization.Filters
                     return;
                 }
             }
+
+            await next();
         }
     }
 }
