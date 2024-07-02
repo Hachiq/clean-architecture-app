@@ -18,6 +18,8 @@ namespace Presentation
         {
             services.AddTransient<UsernameTakenFilter>();
             services.AddTransient<EmailTakenFilter>();
+            services.AddTransient<UsernameInvalid>();
+            services.AddTransient<PasswordTooShort>();
 
             return services;
         }

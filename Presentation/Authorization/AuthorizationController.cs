@@ -20,6 +20,8 @@ namespace Presentation.Authorization
         }
 
         [HttpPost("register")]
+        [ServiceFilter(typeof(UsernameInvalid))]
+        [ServiceFilter(typeof(PasswordTooShort))]
         [ServiceFilter(typeof(UsernameTakenFilter))]
         [ServiceFilter(typeof(EmailTakenFilter))]
         public async Task<ActionResult> Register(RegisterRequest request)
