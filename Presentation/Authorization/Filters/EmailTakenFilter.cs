@@ -21,7 +21,7 @@ namespace Presentation.Authorization.Filters
                 var user = await _userRepository.GetByEmailAsync(request.Email);
                 if (user is not null)
                 {
-                    context.Result = new BadRequestObjectResult("User with such email already exists.");
+                    context.Result = new ConflictObjectResult("User with such email already exists.");
                     return;
                 }
             }
