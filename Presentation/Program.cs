@@ -19,6 +19,8 @@ namespace Presentation
 
             // Configure the HTTP request pipeline.
 
+            app.UseCors("NgOrigins");
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

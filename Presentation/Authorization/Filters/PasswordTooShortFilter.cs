@@ -10,7 +10,7 @@ namespace Presentation.Authorization.Filters
         {
             if (context.ActionArguments.TryGetValue("request", out var value) && value is IPasswordRequest request)
             {
-                if (request.Password.Length < 4)
+                if (request.Password.Length < 6)
                 {
                     context.Result = new BadRequestObjectResult("Password too short.");
                     return;

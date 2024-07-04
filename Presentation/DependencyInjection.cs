@@ -11,6 +11,26 @@ namespace Presentation
 
             services.AddAuthorizationFilters();
 
+            services.AddCors();
+
+            return services;
+        }
+
+        private static IServiceCollection AddCors(this IServiceCollection services)
+        {
+            services.AddCors(options => 
+                options.AddPolicy(
+                    name: "NgOrigins",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:4200")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                    }
+                )
+            );
+
             return services;
         }
 
