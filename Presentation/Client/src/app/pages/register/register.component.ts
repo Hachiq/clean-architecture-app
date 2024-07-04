@@ -37,24 +37,23 @@ export class RegisterComponent {
       username: this.username.value,
       email: this.email.value,
       password: this.password.value
-    }).subscribe(() => {
-      this.router.navigate(['login']);
-    },
-      (error) => {
-        if (error.status === 409) {
-          const reason = error.error.reason;
-          if (reason === "EmailTaken") {
-            this.email.setErrors({ conflict: true });
-          }
-          if (reason === "UsernameTaken") {
+    }).subscribe({
+      next: () => {
+        console.log(`User ${this.username.value} was registered successfully`);
+        this.router.navigate(['login']);
+      },
+      error: (e) => {
+        if(e.status === 409){
+          const reason = e.error.reason;
+          if (reason === 'UsernameTaken') {
             this.username.setErrors({ conflict: true });
           }
+          else if (reason === "EmailTaken") {
+            this.email.setErrors({ conflict: true });
+          }
         }
-        else {
-          console.log("Undefined error. Please, try again later.")
-        }
-      } 
-    )
+      }
+    })
   }
 
   getUsernameErrorMessage() {
