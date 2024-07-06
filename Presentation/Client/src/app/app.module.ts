@@ -9,6 +9,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
+
 import { AuthenticationInterceptor } from './shared/services/authentication.interceptor';
 
 @NgModule({

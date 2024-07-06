@@ -15,6 +15,13 @@ export class HomeComponent {
   constructor(private http: HttpClient) {}
 
   ngOnInit(){
-    this.http.get(`${environment.apiUrl}/weatherforecast`).subscribe((response) => {this.forecast = response})
+    this.http.get(`${environment.apiUrl}/weatherforecast`).subscribe({
+      next: (response) => {
+        this.forecast = response;
+      },
+      error: (e) => {
+        console.log(`Error during token refresh: ${e.error}`);
+      }
+    })
   }
 }
