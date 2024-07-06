@@ -45,12 +45,16 @@ export class RegisterComponent {
       error: (e) => {
         if(e.status === 409){
           const reason = e.error.reason;
-          if (reason === 'UsernameTaken') {
+          
+          if (reason === "UsernameTaken") {
             this.username.setErrors({ conflict: true });
           }
           else if (reason === "EmailTaken") {
             this.email.setErrors({ conflict: true });
           }
+        }
+        else {
+          console.log("Unknown error.");
         }
       }
     })

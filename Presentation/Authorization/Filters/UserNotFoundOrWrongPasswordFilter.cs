@@ -26,7 +26,7 @@ namespace Presentation.Authorization.Filters
                 var user = await _userRepository.GetByUsernameAsync(request.Username);
                 if (user is null || !_passwordService.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
                 {
-                    context.Result = new BadRequestObjectResult("User not found or wrong password.");
+                    context.Result = new BadRequestObjectResult(new { reason = "NoMatch" });
                     return;
                 }
             }

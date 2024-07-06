@@ -1,1 +1,27 @@
-<p>login works!</p>
+<form class="form-container">
+    <p class="form-title">Log in</p>
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput required [formControl]="username" />
+      @if (username.invalid) {
+        <mat-error>{{getUsernameErrorMessage()}}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput [formControl]="password" [type]="hide ? 'password' : 'text'" required />
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      @if (password.invalid) {
+        <mat-error>{{getPasswordErrorMessage()}}</mat-error>
+      }
+    </mat-form-field>
+    <button 
+      class="login-button" 
+      mat-raised-button color="primary" 
+      [disabled]="username.invalid || password.invalid" 
+      (click)="login()">
+      Login
+    </button>
+  </form>
