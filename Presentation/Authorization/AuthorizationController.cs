@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Authentication;
+﻿using Application.Interfaces;
+using Application.Interfaces.Authentication;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Authorization.Filters;
@@ -10,10 +11,12 @@ namespace Presentation.Authorization
     public class AuthorizationController : ControllerBase
     {
         private readonly IAuthenticationService _authenticationService;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
-        public AuthorizationController(IAuthenticationService authenticationService)
+        public AuthorizationController(IAuthenticationService authenticationService, IDateTimeProvider dateTimeProvider)
         {
             _authenticationService = authenticationService;
+            _dateTimeProvider = dateTimeProvider;
         }
 
         [HttpPost("register")]
@@ -41,18 +44,20 @@ namespace Presentation.Authorization
             return Ok(result.JWT);
         }
 
-        [HttpPost("logout")]
+        [HttpGet("logout")]
         [ServiceFilter(typeof(RefreshTokenInvalidFilter))]
         public async Task<ActionResult> Logout()
         {
-            await _authenticationService.LogoutAsync(Request.Cookies["refreshToken"]);
+            var refreshToken = Request.Cookies["refreshToken"];
+            await _authenticationService.LogoutAsync(refreshToken);
 
-            Response.Cookies.Delete("refreshToken");
+            ExpireCookiesRefreshToken(refreshToken);
 
             return Ok();
         }
 
         [HttpGet("refresh-token")]
+        [ServiceFilter(typeof(RefreshTokenMissingFilter))]
         [ServiceFilter(typeof(RefreshTokenInvalidFilter))]
         public async Task<ActionResult> RefreshToken()
         {
@@ -70,6 +75,18 @@ namespace Presentation.Authorization
                 Secure = true
             };
             Response.Cookies.Append("refreshToken", newRefreshToken.Token, cookieOptions);
+        }
+
+        private void ExpireCookiesRefreshToken(string? refreshToken)
+        {
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = _dateTimeProvider.UtcNow,
+                SameSite = SameSiteMode.None,
+                Secure = true
+            };
+            Response.Cookies.Append(nameof(refreshToken), refreshToken, cookieOptions);
         }
     }
 }

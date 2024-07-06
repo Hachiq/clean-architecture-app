@@ -44,6 +44,7 @@ namespace Presentation
             services.AddTransient<UserNotFoundOrWrongPasswordFilter>();
 
             services.AddTransient<RefreshTokenInvalidFilter>();
+            services.AddTransient<RefreshTokenMissingFilter>();
 
             return services;
         }

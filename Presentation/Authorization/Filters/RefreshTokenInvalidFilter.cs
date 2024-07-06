@@ -20,11 +20,11 @@ namespace Presentation.Authorization.Filters
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            if (!context.HttpContext.Request.Cookies.TryGetValue("refreshToken", out var token))
+            if (context.HttpContext.Request.Cookies.TryGetValue("refreshToken", out var token))
             {
                 if (string.IsNullOrEmpty(token))
                 {
-                    context.Result = new BadRequestObjectResult("Refresh token is missing.");
+                    context.Result = new BadRequestObjectResult("Refresh token is invalid.");
                     return;
                 }
                 var refreshToken = await _refreshTokenRepository.GetByTokenAsync(token);

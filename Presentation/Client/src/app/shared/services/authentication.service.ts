@@ -24,6 +24,10 @@ export class AuthenticationService {
     this.accessToken = null;
   }
 
+  isAuthorized(): boolean {
+    return !!this.accessToken;
+  }
+
   refreshToken(): Observable<string> {
     return this.http.get(`${environment.apiUrl}/auth/refresh-token`, { responseType: 'text', withCredentials: true });
   }
