@@ -7,6 +7,7 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { LoginService } from './services/login.service';
 import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private loginService: LoginService, private router: Router, private authService: AuthenticationService) {}
 
   hide = true;
 
@@ -36,9 +37,9 @@ export class LoginComponent {
       username: this.username.value,
       password: this.password.value
     }).subscribe({
-      next: () => {
+      next: (token) => {
         console.log(`User ${this.username.value} was logged in successfully`);
-        // jwt
+        this.authService.setToken(token);
         this.router.navigate(['home']);
       },
       error: (e) => {
