@@ -12,7 +12,7 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   public login(user: LoginRequest): Observable<string> {
-    return this.http.post(`${environment.apiUrl}/auth/login`, user, { responseType: 'text' });
+    return this.http.post(`${environment.apiUrl}/auth/login`, user, { responseType: 'text', withCredentials: true });
   }
 
   public parseErrorResponse(e: any): any {
