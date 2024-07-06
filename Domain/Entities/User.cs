@@ -6,6 +6,7 @@
         public string Username { get; set; } = null!;
         public string Email { get; set; } = null!;
         public bool EmailConfirmed { get; set; }
+        public Guid EmailConfirmationToken { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Phone { get; set; }

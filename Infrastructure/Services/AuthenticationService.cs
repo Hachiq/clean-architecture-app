@@ -2,6 +2,7 @@
 using Application.Interfaces.Authentication;
 using Application.Repositories;
 using Domain.Entities;
+using System.Net;
 
 namespace Infrastructure.Services
 {
@@ -13,6 +14,7 @@ namespace Infrastructure.Services
         private readonly IRolesRepository _rolesRepository;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IAccessTokenGenerator _accessTokenGenerator;
+        private readonly IEmailSender _emailSender;
 
         public AuthenticationService(
             IPasswordService passwordService,
@@ -20,7 +22,8 @@ namespace Infrastructure.Services
             IUserRepository userRepository,
             IRolesRepository rolesRepository,
             IRefreshTokenRepository refreshTokenRepository,
-            IAccessTokenGenerator accessTokenGenerator)
+            IAccessTokenGenerator accessTokenGenerator,
+            IEmailSender emailSender)
         {
             _passwordService = passwordService;
             _refreshTokenService = refreshTokenService;
@@ -28,6 +31,7 @@ namespace Infrastructure.Services
             _rolesRepository = rolesRepository;
             _refreshTokenRepository = refreshTokenRepository;
             _accessTokenGenerator = accessTokenGenerator;
+            _emailSender = emailSender;
         }
 
         public async Task RegisterUserAsync(RegisterRequest request)
@@ -40,6 +44,7 @@ namespace Infrastructure.Services
                 Username = request.Username,
                 Email = request.Email,
                 EmailConfirmed = false,
+                EmailConfirmationToken = Guid.NewGuid(),
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt
             };
@@ -47,6 +52,10 @@ namespace Infrastructure.Services
             var newRefreshToken = _refreshTokenService.CreateToken();
 
             user.RefreshToken = newRefreshToken;
+
+            var confirmationLink = $"https://localhost:7035/auth/confirmemail?userId={user.Id}&token={user.EmailConfirmationToken}";
+
+            await _emailSender.SendEmailAsync(user.Email, "Email confirmation", "To complete the registration, please follow the confirmation link: " + confirmationLink);
 
             await _userRepository.AddAsync(user);
         }
