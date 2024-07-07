@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Data.Configurations
+namespace Infrastructure.Persistence.SubCategories
 {
     public class SubCategoryConfiguration : IEntityTypeConfiguration<SubCategory>
     {

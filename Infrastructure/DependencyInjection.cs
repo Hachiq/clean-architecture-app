@@ -3,8 +3,12 @@ using Application.Interfaces.Authentication;
 using Application.Repositories;
 using Infrastructure.Data;
 using Infrastructure.EmailService;
+using Infrastructure.Persistence.Ads;
+using Infrastructure.Persistence.Categories;
 using Infrastructure.Persistence.RefreshTokens;
 using Infrastructure.Persistence.Roles;
+using Infrastructure.Persistence.Sections;
+using Infrastructure.Persistence.SubCategories;
 using Infrastructure.Persistence.UserRoles;
 using Infrastructure.Persistence.Users;
 using Infrastructure.Security.TokenGenerator;
@@ -55,10 +59,14 @@ namespace Infrastructure
 
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IUsersRepository, UsersRepository>();
-            services.AddScoped<IRolesRepository, RolesRepository>();
-            services.AddScoped<IUserRolesRepository, UserRolesRepository>();
+            services.AddScoped<IAdsRepository, AdsRepository>();
+            services.AddScoped<ICategoriesRepository, CategoriesRepository>();
             services.AddScoped<IRefreshTokensRepository, RefreshTokensRepository>();
+            services.AddScoped<IRolesRepository, RolesRepository>();
+            services.AddScoped<ISectionsRepository, SectionsRepository>();
+            services.AddScoped<ISubCategoriesRepository, SubCategoriesRepository>();
+            services.AddScoped<IUserRolesRepository, UserRolesRepository>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
 
             return services;
         }

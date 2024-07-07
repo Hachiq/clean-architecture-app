@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Data.Configurations
+namespace Infrastructure.Persistence.Ads
 {
     public class AdConfiguration : IEntityTypeConfiguration<Ad>
     {
