@@ -15,6 +15,7 @@ namespace Infrastructure.Services
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IAccessTokenGenerator _accessTokenGenerator;
         private readonly IEmailSender _emailSender;
+        private readonly IUserRoleService _userRoleService;
 
         public AuthenticationService(
             IPasswordService passwordService,
@@ -23,7 +24,8 @@ namespace Infrastructure.Services
             IRolesRepository rolesRepository,
             IRefreshTokenRepository refreshTokenRepository,
             IAccessTokenGenerator accessTokenGenerator,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IUserRoleService userRoleService)
         {
             _passwordService = passwordService;
             _refreshTokenService = refreshTokenService;
@@ -32,6 +34,7 @@ namespace Infrastructure.Services
             _refreshTokenRepository = refreshTokenRepository;
             _accessTokenGenerator = accessTokenGenerator;
             _emailSender = emailSender;
+            _userRoleService = userRoleService;
         }
 
         public async Task RegisterUserAsync(RegisterRequest request)
@@ -58,6 +61,8 @@ namespace Infrastructure.Services
             await _emailSender.SendEmailAsync(user.Email, "Email confirmation", "To complete the registration, please follow the confirmation link: " + confirmationLink);
 
             await _userRepository.AddAsync(user);
+
+            await _userRoleService.AssignToUserRole(user.Id);
         }
         public async Task<LoginResponse> LoginUserAsync(LoginRequest request)
         {
@@ -92,9 +97,14 @@ namespace Infrastructure.Services
         public async Task ConfirmEmailAsync(Guid userId, Guid confirmationToken)
         {
             var user = await _userRepository.GetByIdAsync(userId);
+            if (user is null)
+            {
+                return;
+            }
             if (user.EmailConfirmationToken.Equals(confirmationToken))
             {
                 await _userRepository.ConfirmEmailAsync(user);
+                await _userRoleService.AssignToConfirmedUserRole(user.Id);
             }
         }
     }

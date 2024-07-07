@@ -5,6 +5,7 @@ using Infrastructure.Data;
 using Infrastructure.EmailService;
 using Infrastructure.Persistence.RefreshTokens;
 using Infrastructure.Persistence.Roles;
+using Infrastructure.Persistence.UserRoles;
 using Infrastructure.Persistence.Users;
 using Infrastructure.Security.TokenGenerator;
 using Infrastructure.Security.TokenValidator;
@@ -47,6 +48,8 @@ namespace Infrastructure
 
             services.AddSingleton<IRefreshTokenService, RefreshTokenService>();
 
+            services.AddScoped<IUserRoleService, UserRoleService>();
+
             return services;
         }
 
@@ -54,6 +57,7 @@ namespace Infrastructure
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRolesRepository, RolesRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
             return services;

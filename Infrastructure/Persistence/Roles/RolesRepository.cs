@@ -23,5 +23,15 @@ namespace Infrastructure.Persistence.Roles
 
             return roles;
         }
+
+        public async Task<Guid> GetRoleIdByNameAsync(string name)
+        {
+            var role = await _db.Roles.SingleOrDefaultAsync(role => role.Name == name);
+            if (role is null)
+            {
+                return Guid.Empty;
+            }
+            return role.Id;
+        }
     }
 }
