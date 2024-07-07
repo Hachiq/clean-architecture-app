@@ -65,6 +65,13 @@ namespace Presentation.Authorization
             return Ok(jwt);
         }
 
+        [HttpGet("confirm-email")]
+        public async Task<ActionResult> ConfirmEmail([FromQuery]Guid userId, [FromQuery]Guid token)
+        {
+            await _authenticationService.ConfirmEmailAsync(userId, token);
+            return Redirect("http://localhost:4200/home");
+        }
+
         private void SetCookiesRefreshToken(RefreshToken newRefreshToken)
         {
             var cookieOptions = new CookieOptions

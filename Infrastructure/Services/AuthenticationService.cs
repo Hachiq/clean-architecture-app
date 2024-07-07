@@ -53,7 +53,7 @@ namespace Infrastructure.Services
 
             user.RefreshToken = newRefreshToken;
 
-            var confirmationLink = $"https://localhost:7035/auth/confirmemail?userId={user.Id}&token={user.EmailConfirmationToken}";
+            var confirmationLink = $"https://localhost:7035/auth/confirm-email?userId={user.Id}&token={user.EmailConfirmationToken}";
 
             await _emailSender.SendEmailAsync(user.Email, "Email confirmation", "To complete the registration, please follow the confirmation link: " + confirmationLink);
 
@@ -87,6 +87,15 @@ namespace Infrastructure.Services
 
             string jwt = _accessTokenGenerator.CreateToken(user, roles);
             return jwt;
+        }
+
+        public async Task ConfirmEmailAsync(Guid userId, Guid confirmationToken)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user.EmailConfirmationToken.Equals(confirmationToken))
+            {
+                await _userRepository.ConfirmEmailAsync(user);
+            }
         }
     }
 }

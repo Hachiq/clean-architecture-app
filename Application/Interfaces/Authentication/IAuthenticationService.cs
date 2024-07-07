@@ -6,5 +6,6 @@
         Task<LoginResponse> LoginUserAsync(LoginRequest request);
         Task LogoutAsync(string? refreshToken);
         Task<string> RefreshTokenAsync(string? refreshToken);
+        Task ConfirmEmailAsync(Guid userId, Guid confirmationToken);
     }
 }

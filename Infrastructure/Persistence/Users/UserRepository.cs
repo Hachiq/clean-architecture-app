@@ -42,5 +42,12 @@ namespace Infrastructure.Persistence.Users
         {
             return await _db.Users.SingleOrDefaultAsync(u => u.RefreshTokenId == id);
         }
+
+        public async Task ConfirmEmailAsync(User user)
+        {
+            user.EmailConfirmed = true;
+            _db.Users.Update(user);
+            await _db.SaveChangesAsync();
+        }
     }
 }

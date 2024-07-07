@@ -9,5 +9,6 @@ namespace Application.Repositories
         Task<User?> GetByUsernameAsync(string username);
         Task<User?> GetByEmailAsync(string email);
         Task<User?> GetByRefreshTokenIdAsync(Guid id);
+        Task ConfirmEmailAsync(User user);
     }
 }
