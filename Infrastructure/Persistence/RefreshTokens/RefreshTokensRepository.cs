@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.RefreshTokens
 {
-    public class RefreshTokenRepository : IRefreshTokenRepository
+    public class RefreshTokensRepository : IRefreshTokensRepository
     {
         private readonly AppDbContext _db;
         private readonly IDateTimeProvider _dateTimeProvider;
 
-        public RefreshTokenRepository(AppDbContext db, IDateTimeProvider dateTimeProvider)
+        public RefreshTokensRepository(AppDbContext db, IDateTimeProvider dateTimeProvider)
         {
             _db = db;
             _dateTimeProvider = dateTimeProvider;

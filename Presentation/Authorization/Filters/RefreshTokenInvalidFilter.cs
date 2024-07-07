@@ -7,11 +7,11 @@ namespace Presentation.Authorization.Filters
 {
     public class RefreshTokenInvalidFilter : IAsyncActionFilter
     {
-        private readonly IRefreshTokenRepository _refreshTokenRepository;
+        private readonly IRefreshTokensRepository _refreshTokenRepository;
         private readonly IDateTimeProvider _dateTimeProvider;
 
         public RefreshTokenInvalidFilter(
-            IRefreshTokenRepository refreshTokenRepository,
+            IRefreshTokensRepository refreshTokenRepository,
             IDateTimeProvider dateTimeProvider)
         {
             _refreshTokenRepository = refreshTokenRepository;

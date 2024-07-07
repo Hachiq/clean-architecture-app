@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Users
 {
-    public class UserRepository : IUserRepository
+    public class UsersRepository : IUsersRepository
     {
         private readonly AppDbContext _db;
-        public UserRepository(AppDbContext db)
+        public UsersRepository(AppDbContext db)
         {
             _db = db;
         }

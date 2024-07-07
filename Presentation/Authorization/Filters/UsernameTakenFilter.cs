@@ -7,9 +7,9 @@ namespace Presentation.Authorization.Filters
 {
     public class UsernameTakenFilter : IAsyncActionFilter
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUsersRepository _userRepository;
 
-        public UsernameTakenFilter(IUserRepository userRepository)
+        public UsernameTakenFilter(IUsersRepository userRepository)
         {
             _userRepository = userRepository;
         }

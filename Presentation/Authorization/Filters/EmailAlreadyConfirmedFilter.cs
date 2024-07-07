@@ -6,9 +6,9 @@ namespace Presentation.Authorization.Filters
 {
     public class EmailAlreadyConfirmedFilter : IAsyncActionFilter
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUsersRepository _userRepository;
 
-        public EmailAlreadyConfirmedFilter(IUserRepository userRepository)
+        public EmailAlreadyConfirmedFilter(IUsersRepository userRepository)
         {
             _userRepository = userRepository;
         }

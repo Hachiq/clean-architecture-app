@@ -2,7 +2,7 @@
 
 namespace Application.Repositories
 {
-    public interface IUserRepository
+    public interface IUsersRepository
     {
         Task AddAsync(User user);
         Task<User?> GetByIdAsync(Guid id);

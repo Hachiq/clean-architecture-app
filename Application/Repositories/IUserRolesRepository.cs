@@ -1,6 +1,6 @@
 ﻿namespace Application.Repositories
 {
-    public interface IUserRoleRepository
+    public interface IUserRolesRepository
     {
         Task AddUserRoleAsync(Guid userId, Guid roleId);
     }

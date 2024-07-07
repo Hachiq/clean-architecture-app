@@ -8,11 +8,11 @@ namespace Presentation.Authorization.Filters
 {
     public class UserNotFoundOrWrongPasswordFilter : IAsyncActionFilter
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUsersRepository _userRepository;
         private readonly IPasswordService _passwordService;
 
         public UserNotFoundOrWrongPasswordFilter(
-            IUserRepository userRepository,
+            IUsersRepository userRepository,
             IPasswordService passwordService)
         {
             _userRepository = userRepository;

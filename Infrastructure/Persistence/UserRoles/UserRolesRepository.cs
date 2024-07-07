@@ -4,11 +4,11 @@ using Infrastructure.Data;
 
 namespace Infrastructure.Persistence.UserRoles
 {
-    public class UserRoleRepository : IUserRoleRepository
+    public class UserRolesRepository : IUserRolesRepository
     {
         private readonly AppDbContext _db;
 
-        public UserRoleRepository(AppDbContext db)
+        public UserRolesRepository(AppDbContext db)
         {
             _db = db;
         }

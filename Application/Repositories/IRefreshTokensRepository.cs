@@ -2,7 +2,7 @@
 
 namespace Application.Repositories
 {
-    public interface IRefreshTokenRepository
+    public interface IRefreshTokensRepository
     {
         Task<RefreshToken?> GetByTokenAsync(string? token);
         Task ExpireRefreshToken(RefreshToken refreshToken);
