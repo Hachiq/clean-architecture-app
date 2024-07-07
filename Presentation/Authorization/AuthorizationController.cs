@@ -66,6 +66,7 @@ namespace Presentation.Authorization
         }
 
         [HttpGet("confirm-email")]
+        [ServiceFilter(typeof(EmailAlreadyConfirmedFilter))]
         public async Task<ActionResult> ConfirmEmail([FromQuery]Guid userId, [FromQuery]Guid token)
         {
             await _authenticationService.ConfirmEmailAsync(userId, token);

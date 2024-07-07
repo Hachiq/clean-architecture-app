@@ -46,6 +46,8 @@ namespace Presentation
             services.AddTransient<RefreshTokenInvalidFilter>();
             services.AddTransient<RefreshTokenMissingFilter>();
 
+            services.AddTransient<EmailAlreadyConfirmedFilter>();
+
             return services;
         }
     }
