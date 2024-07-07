@@ -4,7 +4,7 @@
 
   <span class="main-spacer"></span>
 
-  <div *ngIf="!authorized()">
+  <div *ngIf="!(authService.currentUser$ | async)">
 
     <a routerLink="/register">Register</a>
 
@@ -14,7 +14,7 @@
 
   </div>
 
-  <div *ngIf="authorized()">
+  <div *ngIf="authService.currentUser$ | async">
     <app-logout></app-logout>
   </div>
 

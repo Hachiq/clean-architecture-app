@@ -37,6 +37,16 @@ namespace Infrastructure.Services
             _userRoleService = userRoleService;
         }
 
+        public async Task<User> GetCurrentUser(string refreshToken)
+        {
+            var token = await _refreshTokensRepository.GetByTokenAsync(refreshToken);
+            if (token is null)
+            {
+                return null;
+            }
+            return await _usersRepository.GetByRefreshTokenIdAsync(token.Id);
+        }
+
         public async Task RegisterUserAsync(RegisterRequest request)
         {
             _passwordService.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);

@@ -20,6 +20,7 @@ export class LogoutComponent {
       next: () => {
         this.authService.clearToken();
         console.log("Logged out successfully.");
+        this.authService.removeCurrentUser();
         this.router.navigate(['login']);
       },
       error: () => {

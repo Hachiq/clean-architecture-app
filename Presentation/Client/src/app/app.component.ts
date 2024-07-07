@@ -20,4 +20,12 @@ export class AppComponent {
       }
     });
   }
+
+  ngOnInit(){
+    this.loadCurrenUser();
+  }
+
+  loadCurrenUser(){
+    this.authService.loadCurrentUser().subscribe();
+  }
 }

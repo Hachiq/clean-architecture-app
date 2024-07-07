@@ -19,6 +19,16 @@ namespace Presentation.Authorization
             _dateTimeProvider = dateTimeProvider;
         }
 
+        [HttpGet("get-current-user")]
+        [ServiceFilter(typeof(RefreshTokenMissingFilter))]
+        [ServiceFilter(typeof(RefreshTokenInvalidFilter))]
+        public async Task<ActionResult> GetCurrentUser()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+            var user = await _authenticationService.GetCurrentUser(refreshToken);
+            return Ok(new UserResponse(user.Username, user.Email, user.FirstName, user.LastName, user.Phone));
+        }
+
         [HttpPost("register")]
         [ServiceFilter(typeof(UsernameInvalidFilter))]
         [ServiceFilter(typeof(PasswordTooShortFilter))]

@@ -40,6 +40,7 @@ export class LoginComponent {
       next: (token) => {
         console.log(`User ${this.username.value} was logged in successfully`);
         this.authService.setToken(token);
+        this.authService.loadCurrentUser().subscribe();
         this.router.navigate(['home']);
       },
       error: (e) => {

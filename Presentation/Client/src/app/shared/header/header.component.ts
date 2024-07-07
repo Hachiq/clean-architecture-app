@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { LogoutComponent } from '../logout/logout.component';
 
 @Component({
@@ -12,13 +12,14 @@ import { LogoutComponent } from '../logout/logout.component';
     MatToolbarModule,
     RouterModule,
     NgIf,
-    LogoutComponent
+    LogoutComponent,
+    CommonModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  constructor(private authService: AuthenticationService) {}
+  constructor(public authService: AuthenticationService) {}
 
   authorized(): boolean {
     return this.authService.isAuthorized();
