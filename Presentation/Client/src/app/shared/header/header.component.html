@@ -4,7 +4,7 @@
 
   <span class="main-spacer"></span>
 
-  <div *ngIf="!(authService.currentUser$ | async)">
+  <div *ngIf="!(authService.currentUser$ | async) && !(loadingService.isLoading | async)">
 
     <a routerLink="/register">Register</a>
 

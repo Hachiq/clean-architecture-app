@@ -11,6 +11,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 
 import { AuthenticationInterceptor } from './shared/services/authentication.interceptor';
+import { LoadingInterceptor } from './shared/services/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,11 @@ import { AuthenticationInterceptor } from './shared/services/authentication.inte
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthenticationInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
       multi: true
     },
     provideAnimationsAsync()
