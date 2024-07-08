@@ -1,0 +1,11 @@
+<div *ngIf="authService.currentUser$ | async as user">
+    <a [matMenuTriggerFor]="menu">{{user.username}}</a>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['user-profile', user.id]">
+            Profile
+        </button>
+        <button mat-menu-item>
+            <app-logout></app-logout>
+        </button>
+    </mat-menu>
+</div>

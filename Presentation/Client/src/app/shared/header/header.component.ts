@@ -3,8 +3,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { CommonModule, NgIf } from '@angular/common';
-import { LogoutComponent } from '../logout/logout.component';
 import { LoadingService } from '../services/loading.service';
+import { ProfileDropdownComponent } from './profile-dropdown/profile-dropdown.component';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +13,7 @@ import { LoadingService } from '../services/loading.service';
     MatToolbarModule,
     RouterModule,
     NgIf,
-    LogoutComponent,
+    ProfileDropdownComponent,
     CommonModule
   ],
   templateUrl: './header.component.html',
