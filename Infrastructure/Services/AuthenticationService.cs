@@ -40,10 +40,7 @@ namespace Infrastructure.Services
         public async Task<User> GetCurrentUser(string refreshToken)
         {
             var token = await _refreshTokensRepository.GetByTokenAsync(refreshToken);
-            if (token is null)
-            {
-                return null;
-            }
+
             return await _usersRepository.GetByRefreshTokenIdAsync(token.Id);
         }
 
@@ -88,13 +85,13 @@ namespace Infrastructure.Services
             return new LoginResponse(jwt, newRefreshToken);
         }
 
-        public async Task LogoutAsync(string? token)
+        public async Task LogoutAsync(string token)
         {
             var refreshToken = await _refreshTokensRepository.GetByTokenAsync(token);
             await _refreshTokensRepository.ExpireRefreshToken(refreshToken);
         }
 
-        public async Task<string> RefreshTokenAsync(string? token)
+        public async Task<string> RefreshTokenAsync(string token)
         {
             var refreshToken = await _refreshTokensRepository.GetByTokenAsync(token);
             var user = await _usersRepository.GetByRefreshTokenIdAsync(refreshToken.Id);

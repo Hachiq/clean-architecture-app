@@ -24,7 +24,7 @@ namespace Presentation.Authorization
         [ServiceFilter(typeof(RefreshTokenInvalidFilter))]
         public async Task<ActionResult> GetCurrentUser()
         {
-            var refreshToken = Request.Cookies["refreshToken"];
+            var refreshToken = Request.Cookies["refreshToken"]!;
             var user = await _authenticationService.GetCurrentUser(refreshToken);
             return Ok(new UserResponse(user.Username, user.Email, user.FirstName, user.LastName, user.Phone));
         }
@@ -58,7 +58,7 @@ namespace Presentation.Authorization
         [ServiceFilter(typeof(RefreshTokenInvalidFilter))]
         public async Task<ActionResult> Logout()
         {
-            var refreshToken = Request.Cookies["refreshToken"];
+            var refreshToken = Request.Cookies["refreshToken"]!;
             await _authenticationService.LogoutAsync(refreshToken);
 
             ExpireCookiesRefreshToken(refreshToken);
@@ -71,7 +71,7 @@ namespace Presentation.Authorization
         [ServiceFilter(typeof(RefreshTokenInvalidFilter))]
         public async Task<ActionResult> RefreshToken()
         {
-            var jwt = await _authenticationService.RefreshTokenAsync(Request.Cookies["refreshToken"]);
+            var jwt = await _authenticationService.RefreshTokenAsync(Request.Cookies["refreshToken"]!);
             return Ok(jwt);
         }
 
@@ -95,7 +95,7 @@ namespace Presentation.Authorization
             Response.Cookies.Append("refreshToken", newRefreshToken.Token, cookieOptions);
         }
 
-        private void ExpireCookiesRefreshToken(string? refreshToken)
+        private void ExpireCookiesRefreshToken(string refreshToken)
         {
             var cookieOptions = new CookieOptions
             {

@@ -7,8 +7,8 @@ namespace Application.Interfaces.Authentication
         Task<User> GetCurrentUser(string refreshToken);
         Task RegisterUserAsync(RegisterRequest request);
         Task<LoginResponse> LoginUserAsync(LoginRequest request);
-        Task LogoutAsync(string? refreshToken);
-        Task<string> RefreshTokenAsync(string? refreshToken);
+        Task LogoutAsync(string refreshToken);
+        Task<string> RefreshTokenAsync(string refreshToken);
         Task ConfirmEmailAsync(Guid userId, Guid confirmationToken);
     }
 }

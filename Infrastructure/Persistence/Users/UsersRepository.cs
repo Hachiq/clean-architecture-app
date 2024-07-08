@@ -19,26 +19,26 @@ namespace Infrastructure.Persistence.Users
             await _db.SaveChangesAsync();
         }
 
-        public async Task<User?> GetByIdAsync(Guid id)
+        public async Task<User> GetByIdAsync(Guid id)
         {
             return await _db.Users.FindAsync(id);
         }
 
-        public async Task<User?> GetByUsernameAsync(string username)
+        public async Task<User> GetByUsernameAsync(string username)
         {
             return await _db.Users
                 .Include(u => u.RefreshToken)
                 .SingleOrDefaultAsync(u => u.Username == username);
         }
 
-        public async Task<User?> GetByEmailAsync(string email)
+        public async Task<User> GetByEmailAsync(string email)
         {
             return await _db.Users
                 .Include(u => u.RefreshToken)
                 .SingleOrDefaultAsync(u => u.Email == email);
         }
 
-        public async Task<User?> GetByRefreshTokenIdAsync(Guid id)
+        public async Task<User> GetByRefreshTokenIdAsync(Guid id)
         {
             return await _db.Users.SingleOrDefaultAsync(u => u.RefreshTokenId == id);
         }

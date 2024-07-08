@@ -17,7 +17,7 @@ namespace Infrastructure.Persistence.RefreshTokens
             _dateTimeProvider = dateTimeProvider;
         }
 
-        public async Task<RefreshToken?> GetByTokenAsync(string? token)
+        public async Task<RefreshToken> GetByTokenAsync(string token)
         {
             return await _db.RefreshTokens.SingleOrDefaultAsync(rt => rt.Token == token);
         }
