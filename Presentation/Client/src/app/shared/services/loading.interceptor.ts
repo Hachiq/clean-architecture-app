@@ -12,11 +12,11 @@ export class LoadingInterceptor implements HttpInterceptor {
     this.loadingService.isLoading.next(true);
 
     return next.handle(request).pipe(
-      finalize(
-        () => {
-          this.loadingService.isLoading.next(false);
-        }
-      )
+        finalize(
+            () => {
+                this.loadingService.isLoading.next(false);
+            }
+        )
     )
   }
 }

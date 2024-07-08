@@ -14,9 +14,24 @@ namespace Infrastructure.Persistence.Ads
             _db = db;
         }
 
+        public async Task<Ad> GetByIdAsync(Guid id)
+        {
+            return await _db.Ads.FindAsync(id);
+        }
+
         public async Task<IList<Ad>> GetAllAsync()
         {
             return await _db.Ads.ToListAsync();
+        }
+
+        public async Task<IList<Ad>> GetByUserIdAsync(Guid id)
+        {
+            return await _db.Ads.Where(a => a.UserId == id).ToListAsync();
+        }
+
+        public async Task<IList<Ad>> GetBySubCategoryIdAsync(Guid id)
+        {
+            return await _db.Ads.Where(a => a.SubCategoryId == id).ToListAsync();
         }
     }
 }
