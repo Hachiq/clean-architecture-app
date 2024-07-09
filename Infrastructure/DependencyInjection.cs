@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Interfaces.Authentication;
+using Application.Interfaces.Users;
 using Application.Repositories;
 using Infrastructure.Data;
 using Infrastructure.EmailService;
@@ -53,6 +54,8 @@ namespace Infrastructure
             services.AddSingleton<IRefreshTokenService, RefreshTokenService>();
 
             services.AddScoped<IUserRoleService, UserRoleService>();
+
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }
