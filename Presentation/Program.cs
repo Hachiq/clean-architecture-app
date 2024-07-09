@@ -23,6 +23,8 @@ namespace Presentation
 
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
+
             app.UseAuthorization();
 
 

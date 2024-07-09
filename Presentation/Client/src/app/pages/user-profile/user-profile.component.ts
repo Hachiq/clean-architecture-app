@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserProfileService } from './services/user-profile.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserProfile } from './interfaces/user-profile';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user-profile',
@@ -12,6 +13,7 @@ import { UserProfile } from './interfaces/user-profile';
 })
 export class UserProfileComponent {
   user?: UserProfile;
+  pictureUrl?: string;
 
   constructor(private userService: UserProfileService, private activatedRoute: ActivatedRoute) {}
 
@@ -23,7 +25,10 @@ export class UserProfileComponent {
     const userId = this.activatedRoute.snapshot.paramMap.get('id');
     if(userId){
       this.userService.getUser(userId).subscribe({
-        next: (response) => this.user = response,
+        next: (response) => {
+          this.user = response
+          this.pictureUrl = `${environment.apiUrl}/${response.profilePictureUrl}`
+        },
         error: (error) => console.log(error.error)
       });
     }
