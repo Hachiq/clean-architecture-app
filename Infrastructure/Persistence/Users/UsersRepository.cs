@@ -49,5 +49,11 @@ namespace Infrastructure.Persistence.Users
             _db.Users.Update(user);
             await _db.SaveChangesAsync();
         }
+
+        public async Task UpdateAsync(User user)
+        {
+            _db.Users.Update(user);
+            await _db.SaveChangesAsync();
+        }
     }
 }

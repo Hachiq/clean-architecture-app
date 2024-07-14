@@ -1,11 +1,23 @@
 <p>user-profile works!</p>
-<img [src]="pictureUrl" alt="User profile" [crossOrigin]="user">
+<img [src]="pictureUrl" alt="User profile" width="160" height="90" [crossOrigin]="user">
 <div class="container">
-    <div class="content">
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                Change contact info
-            </mat-expansion-panel-header>
-        </mat-expansion-panel>
+    <div class="content" *ngIf="user">
+        <mat-accordion class="content-headers-align">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Change contact info
+                </mat-expansion-panel-header>
+                <mat-form-field>
+                    <mat-label>First name</mat-label>
+                    <input matInput type="text" placeholder="{{user.firstName}}" [formControl]="firstName">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Last name</mat-label>
+                    <input matInput type="text" placeholder="{{user.lastName}}" [formControl]="lastName">
+                </mat-form-field>
+                <br>
+                <button mat-raised-button color="primary" (click)="updateContacts(user.id)">Update</button>
+            </mat-expansion-panel>
+        </mat-accordion>
     </div>
 </div>

@@ -21,5 +21,12 @@ namespace Presentation.Controllers
             var user = await _userService.GetUserByIdAsync(id);
             return Ok(user);
         }
+
+        [HttpPut("{id}/update-contacts")]
+        public async Task<ActionResult> UpdateUserContactInfo([FromRoute] Guid id, [FromBody] UserContactsRequest request)
+        {
+            await _userService.UpdateUserContactsAsync(id, request);
+            return Ok();
+        }
     }
 }

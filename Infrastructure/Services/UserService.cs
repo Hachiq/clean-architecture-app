@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Users;
 using Application.Repositories;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Services
 {
@@ -24,6 +25,20 @@ namespace Infrastructure.Services
                 user.Phone,
                 user.ProfilePictureUrl
             );
+        }
+
+        public async Task UpdateUserContactsAsync(Guid id, UserContactsRequest contacts)
+        {
+            var user = await _usersRepository.GetByIdAsync(id);
+            if (!contacts.FirstName.IsNullOrEmpty())
+            {
+                user.FirstName = contacts.FirstName;
+            }
+            if (!contacts.LastName.IsNullOrEmpty())
+            {
+                user.LastName = contacts.LastName;
+            }
+            await _usersRepository.UpdateAsync(user);
         }
     }
 }

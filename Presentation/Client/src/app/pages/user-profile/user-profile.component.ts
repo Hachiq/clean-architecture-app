@@ -6,6 +6,9 @@ import { environment } from 'src/environments/environment';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-user-profile',
@@ -13,7 +16,10 @@ import { MatInputModule } from '@angular/material/input';
   imports: [
     NgIf,
     MatExpansionModule,
-    MatInputModule
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatButtonModule
   ],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
@@ -26,6 +32,21 @@ export class UserProfileComponent {
 
   ngOnInit(){
     this.loadUser();
+  }
+
+  firstName = new FormControl('');
+  lastName = new FormControl('');
+  updateContacts(id: string){
+    this.userService.updateContacts(id, {
+      firstName: this.firstName.value,
+      lastName: this.lastName.value
+    }).subscribe({
+      next: () => {
+        this.loadUser();
+        this.firstName.reset();
+        this.lastName.reset();
+      }
+    });
   }
 
   loadUser(){
