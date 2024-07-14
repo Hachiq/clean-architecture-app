@@ -63,13 +63,12 @@ namespace Infrastructure.Services
 
             user.RefreshToken = newRefreshToken;
 
-            var confirmationLink = $"https://localhost:7035/auth/confirm-email?userId={user.Id}&token={user.EmailConfirmationToken}";
-
-            await _emailSender.SendEmailAsync(user.Email, "Email confirmation", "To complete the registration, please follow the confirmation link: " + confirmationLink);
-
             await _usersRepository.AddAsync(user);
 
             await _userRoleService.AssignToUserRole(user.Id);
+
+            var confirmationLink = $"https://localhost:7035/auth/confirm-email?userId={user.Id}&token={user.EmailConfirmationToken}";
+            await _emailSender.SendEmailAsync(user.Email, "Email confirmation", "To complete the registration, please follow the confirmation link: " + confirmationLink);
         }
         public async Task<LoginResponse> LoginUserAsync(LoginRequest request)
         {

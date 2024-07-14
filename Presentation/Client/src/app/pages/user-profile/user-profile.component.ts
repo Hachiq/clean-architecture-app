@@ -3,11 +3,18 @@ import { UserProfileService } from './services/user-profile.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserProfile } from './interfaces/user-profile';
 import { environment } from 'src/environments/environment';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { NgIf } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [],
+  imports: [
+    NgIf,
+    MatExpansionModule,
+    MatInputModule
+  ],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
