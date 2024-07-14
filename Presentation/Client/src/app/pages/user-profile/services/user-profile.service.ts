@@ -4,6 +4,7 @@ import { UserProfile } from '../interfaces/user-profile';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { UserContactsRequest } from '../interfaces/user-contacts.request';
+import { UserEmailRequest } from '../interfaces/user-email.request';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,10 @@ export class UserProfileService {
   }
 
   public updateContacts(id: string, contacts: UserContactsRequest): Observable<void>{
-    return this.http.put<void>(`${environment.apiUrl}/users/${id}/update-contacts`, contacts)
+    return this.http.put<void>(`${environment.apiUrl}/users/${id}/update-contacts`, contacts);
+  }
+
+  public updateEmail(id: string, email: UserEmailRequest): Observable<void>{
+    return this.http.put<void>(`${environment.apiUrl}/users/${id}/update-email`, email, { withCredentials:true });
   }
 }

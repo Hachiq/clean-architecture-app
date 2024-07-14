@@ -23,5 +23,15 @@ namespace Infrastructure.Persistence.UserRoles
             await _db.AddAsync(userRole);
             await _db.SaveChangesAsync();
         }
+
+        public async Task RemoveUserRoleAsync(Guid userId, Guid roleId)
+        {
+            var userRole = await _db.UserRoles.FindAsync(userId, roleId);
+            if (userRole is not null)
+            {
+                _db.UserRoles.Remove(userRole);
+                await _db.SaveChangesAsync();
+            }
+        }
     }
 }

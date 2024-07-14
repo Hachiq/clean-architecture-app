@@ -5,6 +5,6 @@
         Task AssignToUserRole(Guid userId);
         Task AssignToConfirmedUserRole(Guid userId);
         Task AssignToAdminRole(Guid userId);
-
+        Task RemoveFromConfirmedUserRole(Guid userId);
     }
 }

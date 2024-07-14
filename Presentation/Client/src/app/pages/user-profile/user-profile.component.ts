@@ -49,6 +49,18 @@ export class UserProfileComponent {
     });
   }
 
+  email = new FormControl('', [Validators.email]);
+  updateEmail(id: string){
+    this.userService.updateEmail(id, {
+      email: this.email.value
+    }).subscribe({
+      next: () => {
+        this.loadUser();
+        this.email.reset();
+      }
+    })
+  }
+
   loadUser(){
     const userId = this.activatedRoute.snapshot.paramMap.get('id');
     if(userId){

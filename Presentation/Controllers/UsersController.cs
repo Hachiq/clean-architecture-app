@@ -28,5 +28,12 @@ namespace Presentation.Controllers
             await _userService.UpdateUserContactsAsync(id, request);
             return Ok();
         }
+
+        [HttpPut("{id}/update-email")]
+        public async Task<ActionResult> UpdateUserEmail([FromRoute] Guid id, [FromBody] UserEmailRequest request)
+        {
+            await _userService.UpdateUserEmailAsync(id, request);
+            return Ok();
+        }
     }
 }

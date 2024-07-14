@@ -38,10 +38,11 @@ $Client-theme: mat.define-light-theme((
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #FFF8F3;}
 
 a {
-    text-decoration: none;
+  text-decoration: none;
+  color: black;
 }
 
 a:hover {

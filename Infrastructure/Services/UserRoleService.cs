@@ -31,5 +31,11 @@ namespace Infrastructure.Services
             var roleId = await _rolesRepository.GetRoleIdByNameAsync("User");
             await _userRolesRepository.AddUserRoleAsync(userId, roleId);
         }
+
+        public async Task RemoveFromConfirmedUserRole(Guid userId)
+        {
+            var roleId = await _rolesRepository.GetRoleIdByNameAsync("ConfirmedUser");
+            await _userRolesRepository.RemoveUserRoleAsync(userId, roleId);
+        }
     }
 }

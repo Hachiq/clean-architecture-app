@@ -18,6 +18,17 @@
                 <br>
                 <button mat-raised-button color="primary" (click)="updateContacts(user.id)">Update</button>
             </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    Change Email
+                </mat-expansion-panel-header>
+                <mat-form-field>
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" placeholder="{{user.email}}" [formControl]="email">
+                </mat-form-field>
+                <br>
+                <button mat-raised-button color="primary" (click)="updateEmail(user.id)">Update</button>
+            </mat-expansion-panel>
         </mat-accordion>
     </div>
 </div>
